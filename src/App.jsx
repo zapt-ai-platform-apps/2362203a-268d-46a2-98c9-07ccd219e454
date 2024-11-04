@@ -9,8 +9,10 @@ function App() {
   const [isRecording, setIsRecording] = createSignal(false);
   const [error, setError] = createSignal(null);
   const [inputMethod, setInputMethod] = createSignal('');
+  const [voices, setVoices] = createSignal([]);
 
   onMount(() => {
+    // Initialize speech recognition
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -42,6 +44,19 @@ function App() {
     } else {
       console.warn('Speech Recognition not supported in this browser.');
       setError('ميزة التعرف على الصوت غير مدعومة في هذا المتصفح.');
+    }
+
+    // Initialize speech synthesis voices
+    if ('speechSynthesis' in window) {
+      const loadVoices = () => {
+        setVoices(window.speechSynthesis.getVoices());
+      };
+
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      loadVoices();
+    } else {
+      console.warn('Speech Synthesis not supported in this browser.');
+      setError('ميزة تحويل النص إلى كلام غير مدعومة في هذا المتصفح.');
     }
   });
 
@@ -89,6 +104,27 @@ function App() {
       const utterance = new SpeechSynthesisUtterance();
       utterance.text = text;
       utterance.lang = 'ar-SA';
+
+      // Select an Arabic voice if available
+      const arabicVoices = voices().filter((voice) => voice.lang.startsWith('ar'));
+      if (arabicVoices.length > 0) {
+        utterance.voice = arabicVoices[0];
+      }
+
+      // Stop any ongoing speech synthesis
+      window.speechSynthesis.cancel();
+
+      // Handle the end event
+      utterance.onend = () => {
+        console.log('Speech synthesis finished');
+        // Any additional logic after speaking
+      };
+
+      utterance.onerror = (e) => {
+        console.error('Speech synthesis error:', e.error);
+        setError('حدث خطأ أثناء تحويل النص إلى كلام. يرجى المحاولة مرة أخرى.');
+      };
+
       window.speechSynthesis.speak(utterance);
     } else {
       console.warn('Speech Synthesis not supported in this browser.');
