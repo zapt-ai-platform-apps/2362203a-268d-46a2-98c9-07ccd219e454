@@ -37,17 +37,15 @@ function App() {
     }
   });
 
-  const startRecording = () => {
+  const toggleRecording = () => {
     if (recognition()) {
-      recognition().start();
-      setIsRecording(true);
-    }
-  };
-
-  const stopRecording = () => {
-    if (recognition()) {
-      recognition().stop();
-      setIsRecording(false);
+      if (isRecording()) {
+        recognition().stop();
+        setIsRecording(false);
+      } else {
+        recognition().start();
+        setIsRecording(true);
+      }
     }
   };
 
@@ -82,7 +80,7 @@ function App() {
   };
 
   return (
-    <div class="min-h-screen bg-gray-100 p-4 text-gray-900 flex items-center justify-center h-full">
+    <div class="h-full bg-gray-100 p-4 text-gray-900 flex items-center justify-center">
       <div class="max-w-2xl w-full text-center">
         <h1 class="text-4xl font-bold mb-4 text-blue-600">تبادل المعلومات التقنية للمكفوفين</h1>
         <p class="text-xl text-gray-700 mb-8">
@@ -126,26 +124,15 @@ function App() {
         <div class="bg-white p-6 rounded-lg shadow-md">
           <h2 class="text-2xl font-bold mb-4 text-blue-600">مساعد الذكاء الاصطناعي مع التحدث الصوتي</h2>
           <form onSubmit={handleSubmit} class="space-y-4">
-            <div class="flex items-center space-x-4 justify-center">
+            <div class="flex items-center justify-center">
               <button
                 type="button"
-                class={`px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
-                  isRecording() ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-                onClick={startRecording}
-                disabled={isRecording()}
+                class={`px-6 py-3 ${
+                  isRecording() ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
+                } text-white rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer`}
+                onClick={toggleRecording}
               >
-                ابدأ التحدث
-              </button>
-              <button
-                type="button"
-                class={`px-6 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
-                  !isRecording() ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-                onClick={stopRecording}
-                disabled={!isRecording()}
-              >
-                إيقاف التحدث
+                {isRecording() ? 'إيقاف التحدث' : 'ابدأ التحدث'}
               </button>
             </div>
             <textarea
