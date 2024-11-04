@@ -1,6 +1,6 @@
 {
   "name": "tech-info-exchange-blind",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "منصة تهدف إلى تمكين المكفوفين من مشاركة وتبادل المعلومات التقنية بسهولة ويسر.",
   "type": "module",
   "scripts": {
@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "solid-js": "^1.8.22",
-    "@sentry/browser": "^8.35.0"
+    "@sentry/browser": "^8.35.0",
+    "@zapt/zapt-js": "^1.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
