@@ -23,6 +23,9 @@ function App() {
         const transcript = event.results[0][0].transcript;
         setInputMethod('voice');
         setUserInput(transcript);
+        recog.stop();
+        setIsRecording(false);
+        handleSubmit();
       };
 
       recog.onerror = (event) => {
@@ -55,8 +58,8 @@ function App() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e = null) => {
+    if (e && e.preventDefault) e.preventDefault();
     if (!userInput().trim()) return;
 
     setLoading(true);
@@ -76,6 +79,7 @@ function App() {
       setError('حدث خطأ أثناء الحصول على الإجابة. يرجى المحاولة مرة أخرى.');
     } finally {
       setLoading(false);
+      setUserInput('');
     }
   };
 
