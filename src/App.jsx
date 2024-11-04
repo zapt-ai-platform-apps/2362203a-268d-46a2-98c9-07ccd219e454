@@ -8,6 +8,7 @@ function App() {
   const [recognition, setRecognition] = createSignal(null);
   const [isRecording, setIsRecording] = createSignal(false);
   const [error, setError] = createSignal(null);
+  const [inputMethod, setInputMethod] = createSignal('');
 
   onMount(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -20,6 +21,7 @@ function App() {
 
       recog.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
+        setInputMethod('voice');
         setUserInput(transcript);
       };
 
@@ -65,7 +67,10 @@ function App() {
         response_type: 'text',
       });
       setAiResponse(result);
-      speakResponse(result);
+
+      if (inputMethod() === 'voice') {
+        speakResponse(result);
+      }
     } catch (error) {
       console.error('Error creating event:', error);
       setError('حدث خطأ أثناء الحصول على الإجابة. يرجى المحاولة مرة أخرى.');
@@ -86,9 +91,15 @@ function App() {
     }
   };
 
+  const handleInput = (e) => {
+    if (isRecording()) return;
+    setUserInput(e.target.value);
+    setInputMethod('text');
+  };
+
   return (
     <div class="h-full bg-gray-100 p-4 text-gray-900 flex items-center justify-center">
-      <div class="max-w-2xl w-full text-center">
+      <div class="max-w-2xl w-full text-center h-full">
         <h1 class="text-4xl font-bold mb-4 text-blue-600">تبادل المعلومات التقنية للمكفوفين</h1>
         <p class="text-xl text-gray-700 mb-8">
           منصة تهدف إلى تمكين المكفوفين من مشاركة وتبادل المعلومات التقنية بسهولة ويسر.
@@ -128,7 +139,7 @@ function App() {
           </a>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="bg-white p-6 rounded-lg shadow-md h-full">
           <h2 class="text-2xl font-bold mb-4 text-blue-600">مساعد الذكاء الاصطناعي مع التحدث الصوتي</h2>
           <form onSubmit={handleSubmit} class="space-y-4">
             <div class="flex items-center justify-center">
@@ -146,7 +157,7 @@ function App() {
               rows="4"
               placeholder="اكتب سؤالك هنا..."
               value={userInput()}
-              onInput={(e) => setUserInput(e.target.value)}
+              onInput={handleInput}
               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent box-border text-gray-900 mt-4"
               required
             ></textarea>
