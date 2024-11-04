@@ -73,6 +73,7 @@ function App() {
 
       if (inputMethod() === 'voice') {
         speakResponse(result);
+        setAiResponse('');
       }
     } catch (error) {
       console.error('Error creating event:', error);
@@ -102,7 +103,7 @@ function App() {
   };
 
   return (
-    <div class="h-full bg-gray-100 p-4 text-gray-900 flex items-center justify-center">
+    <div class="min-h-screen bg-gray-100 p-4 text-gray-900 flex items-center justify-center">
       <div class="max-w-2xl w-full text-center h-full">
         <h1 class="text-4xl font-bold mb-4 text-blue-600">تبادل المعلومات التقنية للمكفوفين</h1>
         <p class="text-xl text-gray-700 mb-8">
@@ -151,8 +152,11 @@ function App() {
                 type="button"
                 class={`px-6 py-3 ${
                   isRecording() ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
-                } text-white rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer`}
+                } text-white rounded-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+                  loading() ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
                 onClick={toggleRecording}
+                disabled={loading()}
               >
                 {isRecording() ? 'إيقاف التحدث' : 'ابدأ التحدث'}
               </button>
@@ -182,7 +186,7 @@ function App() {
               {error()}
             </div>
           </Show>
-          <Show when={aiResponse()}>
+          <Show when={aiResponse() && inputMethod() === 'text'}>
             <div class="mt-6 p-4 bg-gray-100 rounded-lg text-right">
               <h3 class="text-xl font-bold mb-2 text-blue-600">الإجابة:</h3>
               <p class="text-gray-800 whitespace-pre-line">{aiResponse()}</p>
