@@ -1,7 +1,7 @@
 {
   "name": "techexchange-accessible",
   "version": "1.0.0",
-  "description": "An accessible platform for exchanging technical information among visually impaired users.",
+  "description": "منصة يمكن الوصول إليها لتبادل المعلومات التقنية بين المستخدمين ذوي الإعاقة البصرية.",
   "type": "module",
   "scripts": {
     "dev": "vite",

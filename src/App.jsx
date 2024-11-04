@@ -35,7 +35,7 @@ function App() {
     });
 
     return () => {
-      authListener.subscription.unsubscribe();
+      authListener?.subscription.unsubscribe();
     };
   });
 
@@ -107,14 +107,14 @@ function App() {
         fallback={
           <div class="flex items-center justify-center min-h-screen">
             <div class="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
-              <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">Sign in with ZAPT</h2>
+              <h2 class="text-3xl font-bold mb-6 text-center text-blue-600">تسجيل الدخول باستخدام ZAPT</h2>
               <a
                 href="https://www.zapt.ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-blue-500 hover:underline mb-6 block text-center"
               >
-                Learn more about ZAPT
+                تعرف على المزيد حول ZAPT
               </a>
               <Auth
                 supabaseClient={supabase}
@@ -129,29 +129,29 @@ function App() {
       >
         <div class="max-w-4xl mx-auto">
           <div class="flex justify-between items-center mb-8">
-            <h1 class="text-4xl font-bold text-blue-600">TechExchange</h1>
+            <h1 class="text-4xl font-bold text-blue-600">تبادل التقنية</h1>
             <button
               class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-red-400 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
               onClick={handleSignOut}
             >
-              Sign Out
+              تسجيل الخروج
             </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="md:col-span-1">
-              <h2 class="text-2xl font-bold mb-4 text-blue-600">Create New Post</h2>
+              <h2 class="text-2xl font-bold mb-4 text-blue-600">إنشاء منشور جديد</h2>
               <form onSubmit={savePost} class="space-y-4">
                 <input
                   type="text"
-                  placeholder="Title"
+                  placeholder="العنوان"
                   value={newPost().title}
                   onInput={(e) => setNewPost({ ...newPost(), title: e.target.value })}
                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent box-border"
                   required
                 />
                 <textarea
-                  placeholder="Content"
+                  placeholder="المحتوى"
                   value={newPost().content}
                   onInput={(e) => setNewPost({ ...newPost(), content: e.target.value })}
                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent box-border"
@@ -163,14 +163,14 @@ function App() {
                   class={`w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={loading()}
                 >
-                  {loading() ? 'Saving...' : 'Submit'}
+                  {loading() ? 'جارٍ الحفظ...' : 'إرسال'}
                 </button>
               </form>
             </div>
 
             <div class="md:col-span-2">
-              <h2 class="text-2xl font-bold mb-4 text-blue-600">Technical Posts</h2>
-              <Show when={!loading()} fallback={<p>Loading posts...</p>}>
+              <h2 class="text-2xl font-bold mb-4 text-blue-600">منشورات تقنية</h2>
+              <Show when={!loading()} fallback={<p>جارٍ تحميل المنشورات...</p>}>
                 <For each={posts()}>
                   {(post) => (
                     <div class="bg-white p-6 rounded-lg shadow-md mb-4">
@@ -181,7 +181,7 @@ function App() {
                           onClick={() => handleTextToSpeech(post.content)}
                           class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                         >
-                          Listen
+                          استمع
                         </button>
                       </div>
                     </div>
@@ -190,7 +190,7 @@ function App() {
               </Show>
               <Show when={audioUrl()}>
                 <div class="mt-4">
-                  <h3 class="text-xl font-bold mb-2 text-blue-600">Audio Playback</h3>
+                  <h3 class="text-xl font-bold mb-2 text-blue-600">تشغيل الصوت</h3>
                   <audio controls src={audioUrl()} class="w-full" />
                 </div>
               </Show>

@@ -1,97 +1,97 @@
-# TechExchange for the Visually Impaired
+# تبادل التقنية للمكفوفين
 
-TechExchange is a dedicated platform designed to facilitate the exchange of technical information among visually impaired users. The application focuses on accessibility to ensure that users who are blind or have low vision can easily share and access technical content.
+"تبادل التقنية" هو منصة مخصصة تهدف إلى تسهيل تبادل المعلومات التقنية بين المستخدمين ذوي الإعاقة البصرية. يركز التطبيق على إمكانية الوصول لضمان أن المستخدمين المكفوفين أو ضعاف البصر يمكنهم بسهولة مشاركة المحتوى التقني والوصول إليه.
 
-## Features
+## الميزات
 
-1. **User Authentication:**
-   - Users can sign in with ZAPT, utilizing Supabase authentication.
-   - Supports social login providers: Google, Facebook, and Apple.
+1. **تسجيل دخول المستخدمين:**
+   - يمكن للمستخدمين تسجيل الدخول باستخدام ZAPT، باستخدام مصادقة Supabase.
+   - يدعم موفري تسجيل الدخول الاجتماعي: Google وFacebook وApple.
 
-2. **Accessible Interface:**
-   - The app is designed with accessibility in mind, adhering to ARIA standards.
-   - All interactive elements are keyboard navigable, and proper semantic HTML is used.
+2. **واجهة سهلة الوصول:**
+   - تم تصميم التطبيق مع التركيز على إمكانية الوصول، والالتزام بمعايير ARIA.
+   - جميع العناصر التفاعلية قابلة للتنقل عبر لوحة المفاتيح، ويتم استخدام HTML دلالي صحيح.
 
-3. **Post Technical Information:**
-   - Users can create new posts to share technical information.
-   - The post editor supports plain text input suitable for screen readers.
+3. **نشر المعلومات التقنية:**
+   - يمكن للمستخدمين إنشاء منشورات جديدة لمشاركة المعلومات التقنية.
+   - يدعم محرر المنشورات إدخال نص عادي مناسب لقارئات الشاشة.
 
-4. **View and Read Posts:**
-   - Users can browse a list of technical posts shared by others.
-   - Each post can be expanded to read the full content.
+4. **عرض وقراءة المنشورات:**
+   - يمكن للمستخدمين تصفح قائمة بالمنشورات التقنية التي تمت مشاركتها من قبل الآخرين.
+   - يمكن توسيع كل منشور لقراءة محتواه بالكامل.
 
-5. **Text-to-Speech Functionality:**
-   - Integrated text-to-speech feature allows users to listen to the content of posts.
-   - Enhances accessibility for users who prefer auditory content consumption.
+5. **وظيفة تحويل النص إلى كلام:**
+   - ميزة تحويل النص إلى كلام المدمجة تسمح للمستخدمين بالاستماع إلى محتوى المنشورات.
+   - تعزز إمكانية الوصول للمستخدمين الذين يفضلون استهلاك المحتوى صوتيًا.
 
-6. **Responsive Design:**
-   - The application is responsive and works well on various screen sizes.
-   - The design is clean and user-friendly, focusing on ease of use.
+6. **تصميم متجاوب:**
+   - التطبيق متجاوب ويعمل جيدًا على مختلف أحجام الشاشات.
+   - التصميم نظيف وسهل الاستخدام، مع التركيز على سهولة الاستخدام.
 
-7. **Error Logging with Sentry:**
-   - Sentry is integrated for error tracking in both frontend and backend.
-   - Helps in monitoring and improving application stability.
+7. **تسجيل الأخطاء باستخدام Sentry:**
+   - تم دمج Sentry لتتبع الأخطاء في الواجهة الأمامية والخلفية.
+   - يساعد في مراقبة وتحسين استقرار التطبيق.
 
-## User Journey
+## خطوات استخدام التطبيق
 
-### 1. Signing In
+### 1. تسجيل الدخول
 
-- **Step 1:** Open the app, and you are presented with the sign-in page.
-- **Step 2:** Click on "Sign in with ZAPT".
-- **Step 3:** Choose your preferred authentication method (Email, Google, Facebook, Apple).
-- **Step 4:** Upon successful authentication, you are redirected to the home page.
+- **الخطوة 1:** افتح التطبيق، وستظهر لك صفحة تسجيل الدخول.
+- **الخطوة 2:** انقر على "تسجيل الدخول باستخدام ZAPT".
+- **الخطوة 3:** اختر طريقة المصادقة المفضلة لديك (البريد الإلكتروني، Google، Facebook، Apple).
+- **الخطوة 4:** بعد المصادقة بنجاح، سيتم توجيهك إلى الصفحة الرئيسية.
 
-### 2. Browsing Technical Posts
+### 2. تصفح المنشورات التقنية
 
-- **Step 1:** On the home page, you see a list of recent technical posts.
-- **Step 2:** Use keyboard navigation or screen reader commands to browse through the list.
-- **Step 3:** Select a post to expand and read its full content.
-- **Step 4:** Use the text-to-speech feature to listen to the post if desired.
+- **الخطوة 1:** في الصفحة الرئيسية، سترى قائمة بأحدث المنشورات التقنية.
+- **الخطوة 2:** استخدم التنقل بلوحة المفاتيح أو أوامر قارئ الشاشة لتصفح القائمة.
+- **الخطوة 3:** حدد منشورًا لقراءته بالكامل.
+- **الخطوة 4:** استخدم ميزة تحويل النص إلى كلام للاستماع إلى المنشور إذا رغبت في ذلك.
 
-### 3. Creating a New Post
+### 3. إنشاء منشور جديد
 
-- **Step 1:** Navigate to the "Create Post" section.
-- **Step 2:** Enter the title and content of your technical information.
-- **Step 3:** Click the "Submit" button to publish your post.
-- **Step 4:** Your post now appears in the list and is accessible to other users.
+- **الخطوة 1:** انتقل إلى قسم "إنشاء منشور جديد".
+- **الخطوة 2:** أدخل العنوان ومحتوى المعلومات التقنية الخاصة بك.
+- **الخطوة 3:** انقر على زر "إرسال" لنشر منشورك.
+- **الخطوة 4:** سيظهر منشورك الآن في القائمة ويكون متاحًا للمستخدمين الآخرين.
 
-### 4. Signing Out
+### 4. تسجيل الخروج
 
-- **Step 1:** Navigate to the "Sign Out" button at the top of the page.
-- **Step 2:** Click the button to sign out of your account.
-- **Step 3:** You are redirected back to the sign-in page.
+- **الخطوة 1:** انتقل إلى زر "تسجيل الخروج" في أعلى الصفحة.
+- **الخطوة 2:** انقر على الزر لتسجيل الخروج من حسابك.
+- **الخطوة 3:** سيتم توجيهك مرة أخرى إلى صفحة تسجيل الدخول.
 
-## External APIs and Services
+## الخدمات وواجهات برمجة التطبيقات الخارجية
 
-- **Supabase Authentication:**
-  - Used for user authentication and session management.
-  - Provides secure and easy-to-use authentication flows.
+- **مصادقة Supabase:**
+  - تستخدم لمصادقة المستخدمين وإدارة الجلسات.
+  - توفر تدفقات مصادقة آمنة وسهلة الاستخدام.
 
-- **Text-to-Speech API:**
-  - Utilizes the "text_to_speech" event to convert text content into speech.
-  - Enhances accessibility by providing auditory content.
+- **واجهة برمجة تطبيقات تحويل النص إلى كلام:**
+  - تستخدم الحدث "text_to_speech" لتحويل محتوى النص إلى كلام.
+  - تعزز إمكانية الوصول من خلال توفير المحتوى الصوتي.
 
 - **Sentry:**
-  - Used for error logging and monitoring.
-  - Helps in identifying and fixing issues in the application.
+  - تستخدم لتسجيل الأخطاء ومراقبتها.
+  - تساعد في تحديد وإصلاح المشكلات في التطبيق.
 
-## Accessibility Considerations
+## اعتبارات إمكانية الوصول
 
-- All buttons and interactive elements have clear labels.
-- The design uses high-contrast colors for better visibility.
-- ARIA attributes are implemented to improve screen reader compatibility.
-- Keyboard navigation is fully supported throughout the app.
+- جميع الأزرار والعناصر التفاعلية لها تسميات واضحة.
+- يستخدم التصميم ألوانًا ذات تباين عالٍ لتحسين الرؤية.
+- تم تنفيذ سمات ARIA لتحسين توافق قارئات الشاشة.
+- يدعم التنقل بلوحة المفاتيح بالكامل في جميع أنحاء التطبيق.
 
-## Environment Variables
+## المتغيرات البيئية
 
-The following environment variables are required for the application:
+المتغيرات البيئية التالية مطلوبة للتطبيق:
 
-- `VITE_PUBLIC_APP_ID`: The public App ID for ZAPT integration.
-- `VITE_PUBLIC_SENTRY_DSN`: The DSN for Sentry error logging.
-- `VITE_PUBLIC_APP_ENV`: The application environment (e.g., production, development).
+- `VITE_PUBLIC_APP_ID`: معرف التطبيق العام للتكامل مع ZAPT.
+- `VITE_PUBLIC_SENTRY_DSN`: DSN لتسجيل الأخطاء باستخدام Sentry.
+- `VITE_PUBLIC_APP_ENV`: بيئة التطبيق (مثل الإنتاج، التطوير).
 
-Make sure to set these variables in your deployment environment.
+تأكد من تعيين هذه المتغيرات في بيئة النشر الخاصة بك.
 
-## Note
+## ملاحظة
 
-This application focuses on providing an accessible platform for the visually impaired community to share and access technical information easily. Your feedback and suggestions are welcome to further improve the app's accessibility and user experience.
+يركز هذا التطبيق على توفير منصة يمكن الوصول إليها لمجتمع ذوي الإعاقة البصرية لمشاركة المعلومات التقنية والوصول إليها بسهولة. نرحب بملاحظاتك واقتراحاتك لتحسين إمكانية الوصول وتجربة المستخدم في التطبيق.
