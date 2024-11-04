@@ -7,6 +7,7 @@ function App() {
   const [loading, setLoading] = createSignal(false);
   const [recognition, setRecognition] = createSignal(null);
   const [isRecording, setIsRecording] = createSignal(false);
+  const [error, setError] = createSignal(null);
 
   onMount(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -24,6 +25,7 @@ function App() {
 
       recog.onerror = (event) => {
         console.error('Speech recognition error:', event.error);
+        setError('حدث خطأ في التعرف على الصوت. يرجى المحاولة مرة أخرى.');
         setIsRecording(false);
       };
 
@@ -34,6 +36,7 @@ function App() {
       setRecognition(recog);
     } else {
       console.warn('Speech Recognition not supported in this browser.');
+      setError('ميزة التعرف على الصوت غير مدعومة في هذا المتصفح.');
     }
   });
 
@@ -45,6 +48,7 @@ function App() {
       } else {
         recognition().start();
         setIsRecording(true);
+        setError(null);
       }
     }
   };
@@ -54,6 +58,7 @@ function App() {
     if (!userInput().trim()) return;
 
     setLoading(true);
+    setError(null);
     try {
       const result = await createEvent('chatgpt_request', {
         prompt: userInput(),
@@ -63,6 +68,7 @@ function App() {
       speakResponse(result);
     } catch (error) {
       console.error('Error creating event:', error);
+      setError('حدث خطأ أثناء الحصول على الإجابة. يرجى المحاولة مرة أخرى.');
     } finally {
       setLoading(false);
     }
@@ -76,6 +82,7 @@ function App() {
       window.speechSynthesis.speak(utterance);
     } else {
       console.warn('Speech Synthesis not supported in this browser.');
+      setError('ميزة تحويل النص إلى كلام غير مدعومة في هذا المتصفح.');
     }
   };
 
@@ -155,6 +162,11 @@ function App() {
               </Show>
             </button>
           </form>
+          <Show when={error()}>
+            <div class="mt-4 p-3 bg-red-100 text-red-700 rounded-lg">
+              {error()}
+            </div>
+          </Show>
           <Show when={aiResponse()}>
             <div class="mt-6 p-4 bg-gray-100 rounded-lg text-right">
               <h3 class="text-xl font-bold mb-2 text-blue-600">الإجابة:</h3>
