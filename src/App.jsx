@@ -1,10 +1,55 @@
-import { createSignal, Show } from 'solid-js';
+import { createSignal, Show, onMount } from 'solid-js';
 import { createEvent } from './supabaseClient';
 
 function App() {
   const [userInput, setUserInput] = createSignal('');
   const [aiResponse, setAiResponse] = createSignal('');
   const [loading, setLoading] = createSignal(false);
+  const [recognition, setRecognition] = createSignal(null);
+  const [isRecording, setIsRecording] = createSignal(false);
+
+  onMount(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recog = new SpeechRecognition();
+      recog.lang = 'ar-SA';
+      recog.continuous = false;
+      recog.interimResults = false;
+
+      recog.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setUserInput(transcript);
+      };
+
+      recog.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setIsRecording(false);
+      };
+
+      recog.onend = () => {
+        setIsRecording(false);
+      };
+
+      setRecognition(recog);
+    } else {
+      console.warn('Speech Recognition not supported in this browser.');
+    }
+  });
+
+  const startRecording = () => {
+    if (recognition()) {
+      recognition().start();
+      setIsRecording(true);
+    }
+  };
+
+  const stopRecording = () => {
+    if (recognition()) {
+      recognition().stop();
+      setIsRecording(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,9 +59,10 @@ function App() {
     try {
       const result = await createEvent('chatgpt_request', {
         prompt: userInput(),
-        response_type: 'text'
+        response_type: 'text',
       });
       setAiResponse(result);
+      speakResponse(result);
     } catch (error) {
       console.error('Error creating event:', error);
     } finally {
@@ -24,8 +70,19 @@ function App() {
     }
   };
 
+  const speakResponse = (text) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance();
+      utterance.text = text;
+      utterance.lang = 'ar-SA';
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.warn('Speech Synthesis not supported in this browser.');
+    }
+  };
+
   return (
-    <div class="min-h-screen bg-gray-100 p-4 text-gray-900 flex items-center justify-center">
+    <div class="min-h-screen bg-gray-100 p-4 text-gray-900 flex items-center justify-center h-full">
       <div class="max-w-2xl w-full text-center">
         <h1 class="text-4xl font-bold mb-4 text-blue-600">تبادل المعلومات التقنية للمكفوفين</h1>
         <p class="text-xl text-gray-700 mb-8">
@@ -67,14 +124,36 @@ function App() {
         </div>
 
         <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-2xl font-bold mb-4 text-blue-600">مساعد الذكاء الاصطناعي</h2>
+          <h2 class="text-2xl font-bold mb-4 text-blue-600">مساعد الذكاء الاصطناعي مع التحدث الصوتي</h2>
           <form onSubmit={handleSubmit} class="space-y-4">
+            <div class="flex items-center space-x-4 justify-center">
+              <button
+                type="button"
+                class={`px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+                  isRecording() ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                onClick={startRecording}
+                disabled={isRecording()}
+              >
+                ابدأ التحدث
+              </button>
+              <button
+                type="button"
+                class={`px-6 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+                  !isRecording() ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                onClick={stopRecording}
+                disabled={!isRecording()}
+              >
+                إيقاف التحدث
+              </button>
+            </div>
             <textarea
               rows="4"
               placeholder="اكتب سؤالك هنا..."
               value={userInput()}
               onInput={(e) => setUserInput(e.target.value)}
-              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent box-border text-gray-900"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent box-border text-gray-900 mt-4"
               required
             ></textarea>
             <button
